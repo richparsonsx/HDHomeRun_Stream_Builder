@@ -584,7 +584,7 @@ namespace HDHomerun_Stream_Builder
                             uuid = settings.HDHRDMS.Split('|')[1];
 	                    }
 	                    catch (Exception){}
-                        streamData.Add("STREAM_URL", "upnp://" + uuid + "/CableTV%2fv" + channel.VirtualNumber);
+                        streamData.Add("STREAM_URL", "upnp://" + uuid + "/Channels%2fv" + channel.VirtualNumber);
                     }
 
                     //Sources update

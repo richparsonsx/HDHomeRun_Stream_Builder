@@ -13,7 +13,7 @@ class SQLiteDatabase
 	/// </summary>
 	public SQLiteDatabase()
 	{
-        dbConnection = "Data Source=" + @"C:\Users\Rob\AppData\Roaming\XBMC\userdata\addon_data\script.tvguide\source.db";
+		dbConnection = "Data Source=" + @"C:\Users\Rob\AppData\Roaming\XBMC\userdata\addon_data\script.tvguide\source.db";
 	}
 
 	/// <summary>
@@ -82,20 +82,20 @@ class SQLiteDatabase
 		return rowsUpdated;
 	}
 
-    /// <summary>
-    ///     Allows the programmer to interact with the database for purposes other than a query.
-    /// </summary>
-    /// <param name="command">The SQLCommand to be run.</param>
-    /// <returns>An Integer containing the number of rows updated.</returns>
-    public int ExecuteNonQuery(SQLiteCommand command)
-    {
-        SQLiteConnection cnn = new SQLiteConnection(dbConnection);
-        cnn.Open();
-        command.Connection = cnn;
-        int rowsUpdated = command.ExecuteNonQuery();
-        cnn.Close();
-        return rowsUpdated;
-    }
+	/// <summary>
+	///     Allows the programmer to interact with the database for purposes other than a query.
+	/// </summary>
+	/// <param name="command">The SQLCommand to be run.</param>
+	/// <returns>An Integer containing the number of rows updated.</returns>
+	public int ExecuteNonQuery(SQLiteCommand command)
+	{
+		SQLiteConnection cnn = new SQLiteConnection(dbConnection);
+		cnn.Open();
+		command.Connection = cnn;
+		int rowsUpdated = command.ExecuteNonQuery();
+		cnn.Close();
+		return rowsUpdated;
+	}
 
 	/// <summary>
 	///     Allows the programmer to retrieve single items from the DB.
@@ -132,10 +132,10 @@ class SQLiteDatabase
 		{
 			foreach (KeyValuePair<String, String> val in data)
 			{
-                if (val.Value.ToString() == "current_timestamp")
-                    vals += String.Format(" {0} = {1},", val.Key.ToString(), val.Value.ToString());
-                else
-				    vals += String.Format(" {0} = '{1}',", val.Key.ToString(), val.Value.ToString());
+				if (val.Value.ToString() == "current_timestamp")
+					vals += String.Format(" {0} = {1},", val.Key.ToString(), val.Value.ToString());
+				else
+					vals += String.Format(" {0} = '{1}',", val.Key.ToString(), val.Value.ToString());
 			}
 			vals = vals.Substring(0, vals.Length - 1);
 		}
@@ -185,22 +185,22 @@ class SQLiteDatabase
 		foreach (KeyValuePair<String, String> val in data)
 		{
 			columns += String.Format(" {0},", val.Key.ToString());
-            values += String.Format(" @PARM_{0},", val.Key.ToString());
+			values += String.Format(" @PARM_{0},", val.Key.ToString());
 		}
 		columns = columns.Substring(0, columns.Length - 1);
 		values = values.Substring(0, values.Length - 1);
 
 		try
 		{
-            SQLiteCommand command = new SQLiteCommand(String.Format("insert into {0}({1}) values({2});", tableName, columns, values));
-		    foreach (KeyValuePair<String, String> val in data)
-            {
-                if (val.Value.ToString() == "current_timestamp")
-                    command.Parameters.AddWithValue(String.Format("@PARM_{0}", val.Key.ToString()), DateTime.UtcNow);
-                else
-                    command.Parameters.AddWithValue(String.Format("@PARM_{0}", val.Key.ToString()), val.Value);
-		    }
-            this.ExecuteNonQuery(command);
+			SQLiteCommand command = new SQLiteCommand(String.Format("insert into {0}({1}) values({2});", tableName, columns, values));
+			foreach (KeyValuePair<String, String> val in data)
+			{
+				if (val.Value.ToString() == "current_timestamp")
+					command.Parameters.AddWithValue(String.Format("@PARM_{0}", val.Key.ToString()), DateTime.UtcNow);
+				else
+					command.Parameters.AddWithValue(String.Format("@PARM_{0}", val.Key.ToString()), val.Value);
+			}
+			this.ExecuteNonQuery(command);
 		}
 		catch(Exception fail)
 		{
